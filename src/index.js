@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import ReactDOM from 'react-dom';
+import { Route, Link, BrowserRouter as Router, Routes } from 'react-router-dom'  
 import { useState, useEffect } from 'react';
 import './index.css';
 import App from './App';
@@ -21,6 +22,8 @@ import EssayForm from './components/EssayForm.js';
 import FlavorForm from './components/FlavorForm.js';
 import Reservation from './components/Reservation.js';
 import Calculator from './components/Calculator.js';
+import About from './components/About.js';
+import Contact from './components/Contact.js';
 
 
 const element1 = (
@@ -62,28 +65,47 @@ const comment = {
 //   root.render(<Clock />);
 // }
 
+const routing = (
+  <div>
+    <h1>React Router Example</h1>
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />} ></Route>
+        <Route path="/about" element={<About />} ></Route>
+        <Route path="/contact" element={<Contact />} ></Route>
+      </Routes>
+    </Router>
+  </div>
+);
 
-
+root.render(routing);
 root.render(
   <React.StrictMode>
-    <Toggle />
-    <LoggingButton />
-    <Clock />
-    <Clock />
-    <Clock />
-  'ticking'
-    <Tick />
-    <Clock />
-    <Comment
-      date={comment.date}
-      text={comment.text}
-      author={comment.author} />
-    {element1}
-    {element2}
-    {element.props.children}
-    <App />
+  {routing}
   </React.StrictMode>
 );
+
+
+// root.render(
+//   <React.StrictMode>
+//     <Toggle />
+//     <LoggingButton />
+//     <Clock />
+//     <Clock />
+//     <Clock />
+//   'ticking'
+//     <Tick />
+//     <Clock />
+//     <Comment
+//       date={comment.date}
+//       text={comment.text}
+//       author={comment.author} />
+//     {element1}
+//     {element2}
+//     {element.props.children}
+//     <App />
+//   </React.StrictMode>
+// );
 
 // setInterval(ticking, 1000);
 // setInterval(<Tick />, 1000);
