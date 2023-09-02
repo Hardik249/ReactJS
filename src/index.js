@@ -69,6 +69,17 @@ const routing = (
   <div>
     <h1>React Router Example</h1>
     <Router>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+        <li>
+          <Link to="/contact">Contact</Link>
+        </li>
+      </ul>
       <Routes>
         <Route path="/" element={<App />} ></Route>
         <Route path="/about" element={<About />} ></Route>
