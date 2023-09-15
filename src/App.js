@@ -75,8 +75,8 @@ const print = () => {
   pdf.html(string, {
     callback: function (doc) {
       pdf.save();
-      }
-    });
+    }
+  });
   // pdf.html(string);
   // pdf.save("pdf");
   // body...
