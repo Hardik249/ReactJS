@@ -67,6 +67,15 @@ function App() {
           </li>
         </ul>
         <Routes>
+          <Route path="/" Component={Home} ></Route>
+          <Route path="/about" Component={About} ></Route>
+          <Route path="/contact" Component={Contact} ></Route>
+          <Route path="/content" Component={Content} ></Route>
+          <Route path="/users">
+            <Route path=":userId" Component={ProfilePage} />
+          </Route>
+        </Routes>
+        {/*<Routes>
           <Route path="/" element={<Home />} ></Route>
           <Route path="/about" element={<About />} ></Route>
           <Route path="/contact" element={<Contact />} ></Route>
@@ -74,7 +83,7 @@ function App() {
           <Route path="/users">
             <Route path=":userId" element={<ProfilePage />} />
           </Route>
-        </Routes>
+        </Routes>*/}
       </Router>
     </div>
   );
