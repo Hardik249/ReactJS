@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import HookCounterOne from "./components/HookCounterOne";
 import {Fragment, useRef} from 'react';
 import { useCallback } from 'react';
@@ -21,6 +21,12 @@ import Home from './components/Home.js';
 import Contact from './components/Contact.js';
 import Content from './components/Content.js';
 import Categories from './components/Categories.js';
+import Prints from './components/Prints.js';
+import Cookies from 'js-cookie';
+import { jsPDF } from "jspdf";
+import PDF, { Text, AddPage, Line, Image, Table, Html } from 'jspdf-react';
+import { renderToString } from "react-dom/server";
+// import OctoCatImage from './OctoCatImage';
 
 // import Input from "@material-ui/core/Input";
 // import Select from "react-select";
@@ -33,72 +39,130 @@ function ProfilePage() {
   console.log(userId);
 }
 
-function App() {
+const styleH1 = {
+  fontSize: '15px',
+  textAlign: 'center',
+  color: 'red'
+};
 
-  // console.log(JSON.parse(JSON.stringify(localStorage.getItem('i18nextLng'))));
-  let lang = JSON.parse(JSON.stringify(localStorage.getItem('i18nextLng')));
-  // console.log(lang.split('-'));
-  let langArr = lang.split('-');
-  let langStr = langArr[0];
-  // let location = useLocation();
-  // // Get the userId param from the URL.
-  // let { userId } = useParams();
+const invisibleStyle = {
+  // display: 'none',
+};
 
-  // useEffect(() => {
-  //   console.log(location);
-  // }, [location]);
-  // console.log(location);
-  // console.log(userId);
 
-  return (
-    <div className="App">
-      <h1>React Router Example</h1>
-      <Router>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link to="/content">Content</Link>
-          </li>
-          <li>
-            <Link to="/users">ProfilePage</Link>
-          </li>
-          <li>
-            <Link to={'/category/'+langStr+'/categories'}>Categories</Link>
-          </li>
-        </ul>
-        <Routes>
-          <Route path="/" Component={Home} ></Route>
-          <Route path="/about" Component={About} ></Route>
-          <Route path="/contact" Component={Contact} ></Route>
-          <Route path="/content" Component={Content} ></Route>
-          <Route path="/users">
-            <Route path=":userId" Component={ProfilePage} />
-          </Route>
-          <Route path="/category/:lang?/categories">
-            <Route path=":lang?" Component={Categories} />
-          </Route>
-        </Routes>
-        {/*<Routes>
-          <Route path="/" element={<Home />} ></Route>
-          <Route path="/about" element={<About />} ></Route>
-          <Route path="/contact" element={<Contact />} ></Route>
-          <Route path="/content" element={<Content />} ></Route>
-          <Route path="/users">
-            <Route path=":userId" element={<ProfilePage />} />
-          </Route>
-        </Routes>*/}
-      </Router>
-    </div>
-  );
+
+
+const print = () => {
+  const pdf = new jsPDF("p", "mm", "a4");
+  const string = renderToString(<Prints />);
+  console.log(string);
+  const columns = [
+    "SOW Creation Date",
+    "SOW Start Date",
+    "Project",
+    "Last Updated",
+    "SOW End Date"
+  ];
+  var rows = [
+    [
+      "Dec 13, 2017",
+      "Jan 1, 2018",
+      "ABC Connect - ABCXYZ",
+      "Dec 13, 2017",
+      "Dec 31, 2018"
+    ]
+  ];
+  pdf.html(string, {
+    callback: function (doc) {
+      pdf.save();
+      }
+    });
+  // pdf.html(string);
+  // pdf.save("pdf");
+  // body...
 }
+
+const App = () => (
+  <button onClick={print}>print</button>
+);
+
+// function App() {
+
+//   // // console.log(JSON.parse(JSON.stringify(localStorage.getItem('i18nextLng'))));
+//   // let lang = JSON.parse(JSON.stringify(cookieStorage.getItem('pma_lang')));
+//   // // console.log(lang.split('-'));
+//   // let langArr = lang.split('-');
+//   // let langStr = langArr[0];
+//   // let location = useLocation();
+//   // // Get the userId param from the URL.
+//   // let { userId } = useParams();
+
+//   // useEffect(() => {
+//   //   console.log(location);
+//   // }, [location]);
+//   // console.log(location);
+//   // console.log(userId);
+
+//   const pmaLangValue = Cookies.get('pma_lang');
+//   console.log(pmaLangValue); // This will log the value of the 'pma_lang' cookie.
+//   console.log(document.cookie);
+
+//   return (
+//     <div className="App">
+//       <h1>React Router Example</h1>
+//       <Router>
+//         <ul>
+//           <li>
+//             <Link to="/">Home</Link>
+//           </li>
+//           <li>
+//             <Link to="/about">About</Link>
+//           </li>
+//           <li>
+//             <Link to="/contact">Contact</Link>
+//           </li>
+//           <li>
+//             <Link to="/content">Content</Link>
+//           </li>
+//           <li>
+//             <Link to="/users/2">ProfilePage</Link>
+//           </li>
+//           <li>
+//             <Link to={'/category/'+pmaLangValue+'/categories'}>Categories</Link>
+//           </li>
+//         </ul>
+//         <Routes>
+//           <Route
+//             element={
+//               <div>
+//                 <h1>Layout</h1>
+//               </div>
+//             }
+//           ></Route>
+//           <Route path="/" Component={Home} ></Route>
+//           <Route path="/about" Component={About} ></Route>
+//           <Route path="/contact" Component={Contact} ></Route>
+//           <Route path="/content" Component={Content} ></Route>
+//           <Route path="/users">
+//             <Route path=":userId" Component={ProfilePage} />
+//           </Route>
+//           <Route path="/category/:lang?/categories">
+//             <Route path=":lang?" Component={Categories} />
+//           </Route>
+//         </Routes>
+//         {/*<Routes>
+//           <Route path="/" element={<Home />} ></Route>
+//           <Route path="/about" element={<About />} ></Route>
+//           <Route path="/contact" element={<Contact />} ></Route>
+//           <Route path="/content" element={<Content />} ></Route>
+//           <Route path="/users">
+//             <Route path=":userId" element={<ProfilePage />} />
+//           </Route>
+//         </Routes>*/}
+//       </Router>
+//     </div>
+//   );
+// }
 
 // function App() {
 //   const navigate = useNavigate();
