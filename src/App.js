@@ -20,6 +20,7 @@ import About from './components/About.js';
 import Home from './components/Home.js';
 import Contact from './components/Contact.js';
 import Content from './components/Content.js';
+import Categories from './components/Categories.js';
 
 // import Input from "@material-ui/core/Input";
 // import Select from "react-select";
@@ -28,13 +29,17 @@ function ProfilePage() {
   let location = useLocation();
   // Get the userId param from the URL.
   let { userId } = useParams();
-  // ...
   console.log(location);
   console.log(userId);
 }
 
 function App() {
 
+  // console.log(JSON.parse(JSON.stringify(localStorage.getItem('i18nextLng'))));
+  let lang = JSON.parse(JSON.stringify(localStorage.getItem('i18nextLng')));
+  // console.log(lang.split('-'));
+  let langArr = lang.split('-');
+  let langStr = langArr[0];
   // let location = useLocation();
   // // Get the userId param from the URL.
   // let { userId } = useParams();
@@ -65,6 +70,9 @@ function App() {
           <li>
             <Link to="/users">ProfilePage</Link>
           </li>
+          <li>
+            <Link to={'/category/'+langStr+'/categories'}>Categories</Link>
+          </li>
         </ul>
         <Routes>
           <Route path="/" Component={Home} ></Route>
@@ -73,6 +81,9 @@ function App() {
           <Route path="/content" Component={Content} ></Route>
           <Route path="/users">
             <Route path=":userId" Component={ProfilePage} />
+          </Route>
+          <Route path="/category/:lang?/categories">
+            <Route path=":lang?" Component={Categories} />
           </Route>
         </Routes>
         {/*<Routes>
