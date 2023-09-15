@@ -7,6 +7,283 @@ import { useCallback } from 'react';
 import { useMemo } from 'react';
 import Auth from "./components/Auth";
 import AuthContext from "./components/auth-context";
+import { useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import Basic from './components/Basic';
+import SignupForm from './components/SignupForm';
+import { useNavigate } from "react-router-dom";
+import { useLocation, useParams } from 'react-router-dom';
+import { Route, Link, BrowserRouter as Router, Routes } from 'react-router-dom';
+import About from './components/About.js';
+import Home from './components/Home.js';
+import Contact from './components/Contact.js';
+import Content from './components/Content.js';
+
+// import Input from "@material-ui/core/Input";
+// import Select from "react-select";
+
+function ProfilePage() {
+  let location = useLocation();
+  // Get the userId param from the URL.
+  let { userId } = useParams();
+  // ...
+  console.log(location);
+  console.log(userId);
+}
+
+function App() {
+
+  // let location = useLocation();
+  // // Get the userId param from the URL.
+  // let { userId } = useParams();
+
+  // useEffect(() => {
+  //   console.log(location);
+  // }, [location]);
+  // console.log(location);
+  // console.log(userId);
+
+  return (
+    <div className="App">
+      <h1>React Router Example</h1>
+      <Router>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact</Link>
+          </li>
+          <li>
+            <Link to="/content">Content</Link>
+          </li>
+          <li>
+            <Link to="/users">ProfilePage</Link>
+          </li>
+        </ul>
+        <Routes>
+          <Route path="/" element={<Home />} ></Route>
+          <Route path="/about" element={<About />} ></Route>
+          <Route path="/contact" element={<Contact />} ></Route>
+          <Route path="/content" element={<Content />} ></Route>
+          <Route path="/users">
+            <Route path=":userId" element={<ProfilePage />} />
+          </Route>
+        </Routes>
+      </Router>
+    </div>
+  );
+}
+
+// function App() {
+//   const navigate = useNavigate();
+//   return (
+//     <div className="App">
+//       <button onClick={() => navigate(-2)}>
+//         Go 2 pages back
+//       </button>
+//       <button onClick={() => navigate(-1)}>Go back</button>
+//       <button onClick={() => navigate(1)}>
+//         Go forward
+//       </button>
+//       <button onClick={() => navigate(2)}>
+//         Go 2 pages forward
+//       </button>
+//     </div>
+//   );
+// }
+
+
+
+// export default function App() {
+//   const { register, handleSubmit, watch, formState: { errors } } = useForm();
+//   const onSubmit = data => console.log(data);
+
+//   console.log(watch("example")); // watch input value by passing the name of it
+
+//   return (
+//     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       {/* register your input into the hook by invoking the "register" function */}
+//       <input defaultValue="test" {...register("example")} />
+
+//       {/* include validation with required or other standard HTML validation rules */}
+//       <input {...register("exampleRequired", { required: true })} />
+//       {/* errors will return when field validation fails  */}
+//       {errors.exampleRequired && <span>This field is required</span>}
+
+//       <input type="submit" />
+//     </form>
+//   );
+// }
+
+// export default function App() {
+//   const { register, handleSubmit } = useForm();
+//   const onSubmit = data => console.log(data);
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <input {...register("firstName")} />
+//       <select {...register("gender")}>
+//         <option value="female">female</option>
+//         <option value="male">male</option>
+//         <option value="other">other</option>
+//       </select>
+//       <input type="submit" />
+//     </form>
+//   );
+// }
+
+// export default function App() {
+//   const { register, handleSubmit } = useForm();
+//   const onSubmit = data => console.log(data);
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <input {...register("firstName", { required: true, maxLength: 20 })} />
+//       <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} />
+//       <input type="number" {...register("age", { min: 18, max: 99 })} />
+//       <input type="submit" />
+//     </form>
+//   );
+// }
+
+
+// // The following component is an example of your existing Input Component
+// const Input = ({ label, register, required }) => (
+//   <>
+//     <label>{label}</label>
+//     <input {...register(label, { required })} />
+//   </>
+// );
+
+// // you can use React.forwardRef to pass the ref too
+// const Select = React.forwardRef(({ onChange, onBlur, name, label }, ref) => (
+//   <>
+//     <label>{label}</label>
+//     <select name={name} ref={ref} onChange={onChange} onBlur={onBlur}>
+//       <option value="">Select</option>
+//       <option value="20">20</option>
+//       <option value="30">30</option>
+//     </select>
+//   </>
+// ));
+
+// const App = () => {
+//   const { register, handleSubmit } = useForm();
+
+//   const onSubmit = (data) => {
+//     alert(JSON.stringify(data));
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <Input label="First Name" register={register} required />
+//       <Select label="Age" {...register("Age")} />
+//       <input type="submit" />
+//     </form>
+//   );
+// };
+
+
+// const App = () => {
+//   const { control, handleSubmit } = useForm({
+//     defaultValues: {
+//       firstName: '',
+//       select: {}
+//     }
+//   });
+//   const onSubmit = data => console.log(data);
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <Controller
+//         name="firstName"
+//         control={control}
+//         render={({ field }) => <Input {...field} />}
+//       />
+//       <Controller
+//         name="select"
+//         control={control}
+//         render={({ field }) => <Select
+//           {...field}
+//           options={[
+//             { value: "chocolate", label: "Chocolate" },
+//             { value: "strawberry", label: "Strawberry" },
+//             { value: "vanilla", label: "Vanilla" }
+//           ]}
+//         />}
+//       />
+//       <input type="submit" />
+//     </form>
+//   );
+// };
+
+
+
+// // The following component is an example of your existing Input Component
+// const Input = ({ label, register, required }) => (
+//   <>
+//     <label>{label}</label>
+//     <input {...register(label, { required })} />
+//   </>
+// );
+
+// // you can use React.forwardRef to pass the ref too
+// const Select = React.forwardRef(({ onChange, onBlur, name, label }, ref) => (
+//   <>
+//     <label>{label}</label>
+//     <select name={name} ref={ref} onChange={onChange} onBlur={onBlur}>
+//       <option value="">Select</option>
+//       <option value="20">20</option>
+//       <option value="30">30</option>
+//     </select>
+//   </>
+// ));
+
+// const App = () => {
+//   const { register, handleSubmit } = useForm();
+
+//   const onSubmit = (data) => {
+//     alert(JSON.stringify(data));
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <Input label="First Name" register={register} required />
+//       <Select label="Age" {...register("Age")} />
+//       <input type="submit" />
+//     </form>
+//   );
+// };
+
+// function App() {
+//   const { register, formState: { errors }, handleSubmit } = useForm();
+//   const onSubmit = data => console.log(data);
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <input {...register("firstName")} />
+//       {errors.firstName?.type === 'required' && <p role="alert">First name is required</p>}
+//       <input
+//         {...register("mail", { required: "Email Address is required" })}
+//         aria-invalid={errors.mail ? "true" : "false"}
+//       />
+//       {errors.mail && <p role="alert">{errors.mail?.message}</p>}
+//       <select {...register("gender")}>
+//         <option value="female">female</option>
+//         <option value="male">male</option>
+//         <option value="other">other</option>
+//       </select>
+//       <input type="submit" />
+//     </form>
+//   );
+// }
 
 
 
@@ -50,6 +327,14 @@ function Welcome(props) {
 //       {element1}
 //       {element2}
 //       {hello}
+//     </div>
+//   );
+// }
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <SignupForm/>
 //     </div>
 //   );
 // }
@@ -388,41 +673,66 @@ function Welcome(props) {
 //   )
 // };
 
-function App() {
-  return (
-    <div
-      tabIndex={1}
-      onFocus={(e) => {
-        console.log('e.currentTarget', e.currentTarget);
-        console.log('e.relatedTarget', e.relatedTarget);
-        console.log('break');
-        if (e.currentTarget === e.target) {
-          console.log('focused self');
-        } else {
-          console.log('focused child', e.target);
-        }
-        if (!e.currentTarget.contains(e.relatedTarget)) {
-          // Not triggered when swapping focus between children
-          console.log('focus entered self');
-        }
-      }}
-      onBlur={(e) => {
-        if (e.currentTarget === e.target) {
-          console.log('unfocused self');
-        } else {
-          console.log('unfocused child', e.target);
-        }
-        if (!e.currentTarget.contains(e.relatedTarget)) {
-          // Not triggered when swapping focus between children
-          console.log('focus left self');
-        }
-      }}
-    >
-      <input id="1" />
-      <input id="2" />
-    </div>
-  );
-};
+// function App() {
+//   return (
+//     <div
+//       tabIndex={1}
+//       onFocus={(e) => {
+//         console.log('e.currentTarget', e.currentTarget);
+//         console.log('e.relatedTarget', e.relatedTarget);
+//         console.log('break');
+//         if (e.currentTarget === e.target) {
+//           console.log('focused self');
+//         } else {
+//           console.log('focused child', e.target);
+//         }
+//         if (!e.currentTarget.contains(e.relatedTarget)) {
+//           // Not triggered when swapping focus between children
+//           console.log('focus entered self');
+//         }
+//       }}
+//       onBlur={(e) => {
+//         if (e.currentTarget === e.target) {
+//           console.log('unfocused self');
+//         } else {
+//           console.log('unfocused child', e.target);
+//         }
+//         if (!e.currentTarget.contains(e.relatedTarget)) {
+//           // Not triggered when swapping focus between children
+//           console.log('focus left self');
+//         }
+//       }}
+//     >
+//       <input id="1" />
+//       <input id="2" />
+//     </div>
+//   );
+// };
+
+
+// const schema = yup.object({
+//   firstName: yup.string().required(),
+//   age: yup.number().positive().integer().required(),
+// }).required();
+
+// function App() {
+//   const { register, handleSubmit, formState:{ errors } } = useForm({
+//     resolver: yupResolver(schema)
+//   });
+//   const onSubmit = data => console.log(data);
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <input {...register("firstName")} />
+//       <p>{errors.firstName?.message}</p>
+
+//       <input {...register("age")} />
+//       <p>{errors.age?.message}</p>
+
+//       <input type="submit" />
+//     </form>
+//   );
+// };
 
 function formatName(user) {
   return user.firstName + ' ' + user.lastName;

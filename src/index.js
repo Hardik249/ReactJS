@@ -23,7 +23,9 @@ import FlavorForm from './components/FlavorForm.js';
 import Reservation from './components/Reservation.js';
 import Calculator from './components/Calculator.js';
 import About from './components/About.js';
+import Home from './components/Home.js';
 import Contact from './components/Contact.js';
+import Content from './components/Content.js';
 
 
 const element1 = (
@@ -79,23 +81,32 @@ const routing = (
         <li>
           <Link to="/contact">Contact</Link>
         </li>
+        <li>
+          <Link to="/content">Content</Link>
+        </li>
       </ul>
       <Routes>
-        <Route path="/" element={<App />} ></Route>
+        <Route path="/" element={<Home />} ></Route>
         <Route path="/about" element={<About />} ></Route>
         <Route path="/contact" element={<Contact />} ></Route>
+        <Route path="/content" element={<Content />} ></Route>
       </Routes>
     </Router>
   </div>
 );
 
-root.render(routing);
+// root.render(routing);
+// root.render(
+//   <React.StrictMode>
+//   {routing}
+//   </React.StrictMode>
+// );
+
 root.render(
   <React.StrictMode>
-  {routing}
+    <App />
   </React.StrictMode>
 );
-
 
 // root.render(
 //   <React.StrictMode>
