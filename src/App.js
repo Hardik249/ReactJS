@@ -40,8 +40,8 @@ function ProfilePage() {
 }
 
 const styleH1 = {
-  fontSize: '15px',
-  textAlign: 'center',
+  // fontSize: '15px',
+  // textAlign: 'center',
   color: 'red'
 };
 
@@ -52,29 +52,14 @@ const invisibleStyle = {
 
 
 
-const print = () => {
-  const pdf = new jsPDF("p", "mm", "a4");
   const string = renderToString(<Prints />);
   console.log(string);
-  const columns = [
-    "SOW Creation Date",
-    "SOW Start Date",
-    "Project",
-    "Last Updated",
-    "SOW End Date"
-  ];
-  var rows = [
-    [
-      "Dec 13, 2017",
-      "Jan 1, 2018",
-      "ABC Connect - ABCXYZ",
-      "Dec 13, 2017",
-      "Dec 31, 2018"
-    ]
-  ];
+const print = () => {
+  const pdf = new jsPDF();
   pdf.html(string, {
     callback: function (doc) {
-      pdf.save();
+      doc.autoPrint();
+      doc.save();
     }
   });
   // pdf.html(string);
@@ -82,6 +67,13 @@ const print = () => {
   // body...
 }
 
+// const App = () => {
+//   return (
+//     <div className="App">
+//       {string}
+//     </div>
+//   );
+// };
 const App = () => (
   <button onClick={print}>print</button>
 );

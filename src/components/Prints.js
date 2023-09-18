@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PDF, { Text, AddPage, Line, Image, Table, Html } from 'jspdf-react';
 const styleH1 = {
-  fontSize: '15px',
-  textAlign: 'center',
+  // fontSize: '15px',
+  // textAlign: 'center',
   color: 'red'
 };
  
